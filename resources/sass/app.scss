@@ -12,3 +12,12 @@ $fa-font-path: "../webfonts";
 @import "~@fortawesome/fontawesome-free/scss/fontawesome.scss";
 @import "~@fortawesome/fontawesome-free/scss/solid.scss";
 @import "~@fortawesome/fontawesome-free/scss/brands.scss";
+
+.router-link-exact-active {
+    background: #2e6ca2;
+}
+
+a.router-link-exact-active:hover,
+a.router-link-exact-active:focus {
+    background: #2e6ca2 !important;
+}
