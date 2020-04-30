@@ -66,7 +66,7 @@
                         <img src="./img/profile.png" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">{{ auth()->user()->name }}</a>
+                        <a href="#" class="d-block text-uppercase">{{ auth()->user()->name }}</a>
                     </div>
                 </div>
 
@@ -85,18 +85,12 @@
                                 <i class="nav-icon fas fa-cog green"></i>
                                 <p>Management<i class="right fas fa-angle-left"></i></p>
                             </a>
-                            <ul class="nav nav-treeview">
+                            <ul class="nav nav-treeview menu-open">
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link" style="color:#C2C7D0 !important;">
-                                        <i class="fas fa-circle nav-icon"></i>
-                                        <p>Active Page</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="fas fa-circle nav-icon"></i>
-                                        <p>Inactive Page</p>
-                                    </a>
+                                    <router-link to="/users" class="nav-link" style="color:#C2C7D0 !important;">
+                                        <i class="fas fa-users nav-icon teal"></i>
+                                        <p>Users</p>
+                                    </router-link>
                                 </li>
                             </ul>
                         </li>
@@ -110,7 +104,7 @@
                             <a href="{{ route('logout') }}" class="nav-link"
                                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 <i class="nav-icon fas fa-power-off red"></i>
-                                {{ __('Logout') }}
+                                <p>{{ __('Logout') }}</p>
                             </a>
                             <form action="{{ route('logout') }}" id="logout-form" method="POST" style="display:none;">
                                 @csrf
@@ -129,6 +123,7 @@
             <div class="content">
                 <div class="container-fluid">
                     <router-view></router-view>
+                    <vue-progress-bar></vue-progress-bar>
                     <!-- /.row -->
                 </div><!-- /.container-fluid -->
             </div>
