@@ -8,6 +8,12 @@ use App\Http\Controllers\Controller;
 
 class UsersController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -29,13 +35,14 @@ class UsersController extends Controller
         $this->validate(request(), [
             'name' => 'required|string|max:191',
             'email' => 'required|string|email|max:191|unique:users',
-            'password' => 'required|string|min:6'
+            'password' => 'required|string|min:6',
+            'role' => 'required',
         ]);
 
         return User::create([
             'name' => request('name'),
             'email' => request('email'),
-            // 'role' => request('role'),
+            'role' => request('role'),
             'bio' => request('bio'),
             // 'avatar' => request('avatar'),
             'password' => bcrypt(request('password'))
@@ -60,9 +67,25 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        $this->validate(request(), [
+            'name' => 'required|string|max:191',
+            'email' => 'required|string|email|max:191|unique:users,email,' . $user->id,
+            'password' => 'sometimes|min:6',
+            'role' => 'required',
+        ]);
+
+        return $user->update([
+            'name' => request('name'),
+            'email' => request('email'),
+            'role' => request('role'),
+            'bio' => request('bio'),
+            // 'avatar' => request('avatar'),
+            'password' => bcrypt(request('password'))
+        ]);
     }
 
     /**
@@ -73,6 +96,10 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        $user->delete();
+
+        return ['message' => 'User has been deleted.'];
     }
 }
